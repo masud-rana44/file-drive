@@ -25,12 +25,12 @@ http.route({
       switch (result.type) {
         case "user.created":
           await ctx.runMutation(internal.users.createUser, {
-            tokenIdentifier: `https://necessary-kookabura-751.clerk.accounts.dev|${result.data.id}`,
+            tokenIdentifier: `https://loyal-parrot-72.clerk.accounts.dev|${result.data.id}`,
           });
           break;
         case "organizationMembership.created":
           await ctx.runMutation(internal.users.addOrgIdToUser, {
-            tokenIdentifier: `https://necessary-kookabura-751.clerk.accounts.dev|${result.data.public_user_data.user_id}`,
+            tokenIdentifier: `https://loyal-parrot-72.clerk.accounts.dev|${result.data.public_user_data.user_id}`,
             orgId: result.data.organization.id,
           });
           break;
