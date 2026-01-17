@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        hostname: "necessary-kookabura-751.convex.cloud",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -1,6 +1,7 @@
 import { ConvexError, v } from "convex/values";
 import { mutation, MutationCtx, query, QueryCtx } from "./_generated/server";
 import { getUser } from "./users";
+import { fileTypes } from "./schema";
 
 export const generateUploadUrl = mutation({
   args: {},
@@ -18,7 +19,7 @@ export const generateUploadUrl = mutation({
 async function hasAccessToOrg(
   ctx: QueryCtx | MutationCtx,
   tokenIdentifier: string,
-  orgId: string
+  orgId: string,
 ) {
   const user = await getUser(ctx, tokenIdentifier);
 
@@ -29,7 +30,12 @@ async function hasAccessToOrg(
 }
 
 export const createFile = mutation({
-  args: { name: v.string(), fileId: v.id("_storage"), orgId: v.string() },
+  args: {
+    name: v.string(),
+    fileId: v.id("_storage"),
+    type: fileTypes,
+    orgId: v.string(),
+  },
   async handler(ctx, args) {
     const identity = await ctx.auth.getUserIdentity();
 
@@ -40,7 +46,7 @@ export const createFile = mutation({
     const hasAccess = await hasAccessToOrg(
       ctx,
       identity.tokenIdentifier,
-      args.orgId
+      args.orgId,
     );
 
     if (!hasAccess) {
@@ -51,6 +57,7 @@ export const createFile = mutation({
       name: args.name,
       orgId: args.orgId,
       fileId: args.fileId,
+      type: args.type,
     });
   },
 });
@@ -69,7 +76,7 @@ export const getFiles = query({
     const hasAccess = await hasAccessToOrg(
       ctx,
       identity.tokenIdentifier,
-      args.orgId
+      args.orgId,
     );
 
     if (!hasAccess) {
@@ -101,7 +108,7 @@ export const deleteFile = mutation({
     const hasAccess = await hasAccessToOrg(
       ctx,
       identity.tokenIdentifier,
-      file.orgId
+      file.orgId,
     );
 
     if (!hasAccess) {
