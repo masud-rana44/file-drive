@@ -90,6 +90,8 @@ function FileCardActions({ file }: { file: Doc<"files"> }) {
 }
 
 function getFileUrl(fileId: Id<"_storage">): string {
+  console.log(" File Id: --->>> ", fileId);
+  return `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/9bfbe50a-3888-472c-82aa-9bf0dd786cd0`;
   return `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/${fileId}`;
 }
 
@@ -103,7 +105,7 @@ function FileCard({ file }: { file: Doc<"files"> }) {
   return (
     <Card>
       <CardHeader className="relative">
-        <CardTitle>
+        <CardTitle className="flex items-center gap-2">
           <div className="flex justify-center">{typeIcons[file.type]}</div>
           {file.name}
         </CardTitle>
@@ -115,8 +117,8 @@ function FileCard({ file }: { file: Doc<"files"> }) {
         {file.type === "image" && (
           <Image
             alt={file.name}
-            width={200}
-            height={100}
+            width="200"
+            height="100"
             src={getFileUrl(file.fileId)}
           />
         )}
