@@ -7,8 +7,8 @@ export default function DashboardLayout({
   children: ReactNode;
 }>) {
   return (
-    <main className="container mx-auto pt-12">
-      <div className="flex gap-8">
+    <main className="mx-auto h-[calc(100vh-69px)]">
+      <div className="flex gap-8 h-full">
         <SideNav />
 
         <div className="w-full">{children}</div>
